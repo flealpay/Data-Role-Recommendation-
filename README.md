@@ -4,9 +4,11 @@ This project aims to examine data science-related professions in various countri
 
 ABOUT DATASET 
 
+
 Ata science job salaries Dataset contains 12 columns each are : 
 
 3686 Observations 12 Columns 
+
 
 work year:          The year the salary is paid
 
@@ -31,6 +33,9 @@ salary level :      This is a term that significies the compensation level or sa
 country fullname :  It is the name of a column in a dataset and contains the full name of a country 
 
 continent :         This is the name of a column in a dataset and typically indicates to which continent a particular observation belongs 
+
+
+
 
  CONCLUSION 
 
