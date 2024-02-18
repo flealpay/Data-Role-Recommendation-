@@ -1,17 +1,17 @@
 ######################### DATA ROLE RECOMMENDATION #########################
 
-# Work Year: Çalışma Yılı
-# Experience Level: Deneyim Seviyesi
-# Employment Type: İstihdam Türü
-# Job Title: İş Ünvanı
-# Salary: Maaş
-# Employee Residence: Çalışanın İkamet Yeri
-# Remote Ratio: Uzaktan Çalışma Oranı
-# Company Location: Şirket Lokasyonu
-# Company Size: Şirket Büyüklüğü
-# Salary Level: Maaş Seviyesi
-# Country Fullname: Ülkenin Tam Adı
-# Continent: Kıta
+# Work Year
+# Experience Level
+# Employment Type
+# Job Title
+# Salary
+# Employee Residence
+# Remote Ratio
+# Company Location
+# Company Size
+# Salary Level
+# Country Fullname
+# Continent
 
 # pip install pandas numpy
 # pip install country_converter
@@ -55,23 +55,24 @@ def check_df(dataframe, head=5):
 
 check_df(df)
 
-#######################  Salary ve Salary Currency Kaldırıldı.######################
+#######################  Salary and  Salary was removed ######################
 df.drop(['salary_currency', 'salary'], axis=1, inplace=True)
 df.head()
 
-#######################  Sütun adı değiştirildi.######################
+#######################  Column name is changed ######################
 df.rename(columns={'salary_in_usd': 'salary'}, inplace=True)
 df.head()
 
 
-#######################  Part Time (PT)  değişkeni bizim doğru sonuçları etkilediği için kaldırıldı######################
+#######################   The "Part Time (PT)" variable was removed as it was affecting our accurate results. ######################
+
 df["employment_type"].unique()
 
 df.drop(df[df['employment_type'] == 'PT'].index, inplace=True)
 
 df.head()
 
-###################### Birbirine benzer çok fazla değişkenimiz olduğu için bunları Birleştirme işlemi ile düzenliyoruz.######################
+###################### We organize them through a process of consolidation because we have many similar variables.######################
 
 df = df[~df['job_title'].str.contains('Manager')]
 
@@ -141,14 +142,14 @@ for bars in ax.containers:
 plt.tight_layout()
 plt.show()
 
-###################### Değişkenlerimizin yıla göre ve titlelarına göre maaş ortalamalarına bakıyoruz.######################
-maas = df.groupby(["job_title", "work_year"]).agg({"salary": "mean"}).sort_values(by=["work_year", "salary"], ascending=[False, False]) # Büyükten küçüğe
+###################### We look at the average salaries of our variables by year and their titles.######################
+maas = df.groupby(["job_title", "work_year"]).agg({"salary": "mean"}).sort_values(by=["work_year", "salary"], ascending=[False, False]) #  Sort in descending order
 
 print(maas)
 
 
-###################### İlk 10 daki mesleklerin tablo ile gösterilmesi######################
-# Sonuç Data Engineer, Data Scientist, Data Analyst ve Machine Learning alanlarımız lider olarak karşımıza çıkıyor.
+###################### Displaying the first 10 professions in a table ######################
+# The results show that our leading fields are Data Engineer, Data Scientist, Data Analyst, and Machine Learning.
 
 title_counts = df["job_title"].value_counts()
 
@@ -171,8 +172,8 @@ plt.tight_layout()
 plt.show()
 
 
-###################### Deneyim Seviyeleri olarak karşılaştırmalarımızı yapıyoruz.######################
-# Burdan çıkaracağımız sonuç ise Expert ve Intermadiate olarak rakiplerimizin fazla olduğu ve burda da alanda herkesin kendini sürekli geliştirdiğini görmekteyiz.
+###################### We compare based on experience levels. ######################
+# The conclusion we draw from here is that we have many competitors in both the Expert and Intermediate levels, indicating that everyone is continuously improving themselves in this field
 
 level_counts = df['experience_level'].value_counts()
 df = pd.DataFrame(df)
@@ -187,8 +188,8 @@ plt.title('Experience Level Distribution')
 
 plt.show()
 
-###################### Şirket büyüklüğü ve Deneyim Seviyeleri karşılaştırılması ######################
-# Sonuç olarak aslında genelde orta kademeli şirketlerde bir yığılma olduğunu görüyoruz ve burda da aslında küçük ve büyük kademli şirketlerde çalışma alanlarının daha az kişiyle olduğunu söyleyebiliriz.
+###################### Comparison between company size and experience levels ######################
+#### As a result, we actually see a clustering mainly in mid-sized companies, and here we can also say that the working areas in small and large-sized companies involve fewer people ###
 
 cross_tab = pd.crosstab(df['experience_level'], df['company_size'])
 
@@ -201,9 +202,8 @@ plt.title('Relationship between Experience Level and Company Size')
 
 plt.show()
 
-###################### İstihdam Türüne Göre Deneyim Seviyeleri  ######################
-# Sonuç olarak istihdam türüne göre rakiplerimizi Full time olarak daha fazla hizmet verdiğini görmekteyiz.Freelance ve sözleşmeli olarak alan düşündüğümüzde bu alanlarda rekabetimizin daha az olduğunu söyleyebiliriz.
-
+###################### Experience Levels by Employment Type  ######################
+#### As a result, we observe that our competitors predominantly offer services in the Full-time employment category. When considering Freelance and Contractual employment ####
 cross_tab = pd.crosstab(df['experience_level'], df['employment_type'])
 
 
@@ -217,19 +217,18 @@ plt.title('Relationship between Experience Level and Company Size')
 plt.show()
 
 
-###################### Şirketin Konumuna Göre Maaş Sıralaması  ######################
-# Sonuca baktığımızda ABD eyaleti ve komple ülke sıralaması olarak ilk 3 te yerini alıyor gördüğümüz üzere en iyi 10 ülkeyi sıralarsak maaş üzerinden maaşlar 100.000 dolar ve 300.000 dolar arasında seyrediyor burdan şunu çıkartabiliriz ABD olsun 10. sıralamızdaki İşveç olsun bu gibi yerlerde kendimiz için bu alanda yeterince geliştirdikten sonra alabilceğimiz maaşlar gerçekten ortalamna üstü olduğunu görebiliriz kendimize bu maaşları hedef koyabiliriz.
+###################### Salary Ranking According to Company Location  #####################
 
-# IL (Illinois, ABD): $271,446.50
+# IL (Illinois, USA): $271,446.50
 # PR (Puerto Rico): $167,500.00
-# US (Amerika Birleşik Devletleri Genel Ortalama): $152,339.07
-# RU (Rusya): $140,333.33
-# CA (Kanada): $131,986.78
-# NZ (Yeni Zelanda): $125,000.00
-# BA (Bosna-Hersek): $120,000.00
-# IE (İrlanda): $114,943.43
-# JP (Japonya): $114,127.33
-# SE (İsveç): $105,000.00
+# US (USA Overall): $152,339.07
+# RU (Russia): $140,333.33
+# CA (Canada): $131,986.78
+# NZ (New Zeland): $125,000.00
+# BA (Bosnia Herzagovina): $120,000.00
+# IE (İreland): $114,943.43
+# JP (Japan): $114,127.33
+# SE (Sweden): $105,000.00
 average_salary = df.groupby('company_location')['salary'].mean().sort_values(ascending=False)
 
 top_ten_countries = average_salary.head(10)
@@ -246,9 +245,9 @@ plt.gca().yaxis.set_major_formatter(ticker.StrMethodFormatter('{x:,.0f}'))
 plt.show()
 
 
-############################Yeni Feauture olarak maaş kategorize etmek ############################
+############################ Categorizing salaries as a new feature  ############################
 
-#Maasları düşük orta yüksek diye kategorilere bölündü.
+####Salaries have been categorized into low, medium, and high ##
 def categorize_salary(salary):
     if salary < 80000:
         return 'Low'
@@ -269,7 +268,7 @@ df.groupby("employee_residence").agg({"salary": ["mean","count"]})
 df["employee_residence"].value_counts()
 df.head()
 
-##################### Kıtalara göre ayrılması #####################
+##################### Division by continents #####################
 
 def get_country_name(alpha2_code):
     try:
@@ -289,7 +288,7 @@ df.head(100)
 df["Country_Fullname"].isnull().sum()
 
 
-############## Kıtalara göre görselleştirme ##################
+############## Visualization by continents  ##################
 
 df.groupby("job_title").agg({"Continent": "count"}).sort_values(by="Continent", ascending=False).head(10)
 
@@ -307,7 +306,7 @@ plt.tight_layout()
 plt.show()
 
 
-########### Yıllara göre maaş trendi değişimi ##########
+########### Salary trend change over the years ##########
 
 plt.figure(figsize = (10,6))
 salary_trend = df[['salary', 'work_year']].sort_values(by = 'work_year')
@@ -324,7 +323,7 @@ p.grid(False)
 plt.show()
 
 
-######### Deneyim seviyesine göre ortalama maaş ########
+######### Average salary by experience level ########
 
 exp_salary = df.groupby('experience_level')['salary'].mean()
 plt.figure(figsize = (10,6))
@@ -347,7 +346,7 @@ ax.grid(False)
 
 plt.show()
 
-############ istihdam türüne göre ortalama maaş ##############
+############ Average salary by employment type ##############
 
 emp_salary = df.groupby('employment_type')['salary'].mean()
 
@@ -372,7 +371,7 @@ p.grid(False)
 plt.show()
 
 
-############################### deneyim seviyelerine göre ortalama maaş ve çalışma tipi ##################################
+############################### Average salary and employment type by experience levels ##################################
 
 cost_effectiveness = df.groupby(['experience_level', 'employment_type'])['salary'].mean().reset_index()
 
@@ -408,7 +407,7 @@ plt.show()
 
 
 
-################################## vVeri Setindeki çalışan ülkedi kişilerim yüzdeleri #############################################################################
+################################## The percentages of employees in the dataset by country #############################################################################
 
 temp = df['Country_Fullname'].value_counts()[:10].to_frame()
 temp.columns = ['count']
